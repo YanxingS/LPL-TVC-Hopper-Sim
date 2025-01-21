@@ -19,6 +19,7 @@ De = 5/12; % diameter of fueslage in feet
 He = 20/12; % length of cone in feet
 
 % distance from cg to centroid
+
 xf = (96/2)/12; % in feet
 xe = -(20-20/4)/12; % in feet
 
@@ -28,8 +29,11 @@ x_cg = ((mf*xf)+(me*xe))/(mf+me);
 
 % MOI matrix cal
 
-Ixx = 0.5*mf*(Df/2)^2+0.5*me*(De/2)^2;
-Iyy = (1/12)*mf*(3*(Df/2)^2+96^2)+(1/4)*me*((De/2)^2+2*(He)^2)+(mf*(xf-x_cg))^2+(me*(xe-x_cg))^2;
+Ixx = 0.5*mf*(Df/2)^2+(3/10)*me*(De/2)^2;
+Iyy = (1/12)*mf*(3*(Df/2)^2+Hf^2)+(3/80)*me*(4*(De/2)^2+He^2)+(mf*(xf-x_cg))^2+(me*(xe-x_cg))^2;
 Izz = Iyy;
 
-I_matrix = [Ixx 0 0; 0 Iyy 0; 0 0 Izz]; % MOI matrix about principal axis
+S_TD = [Ixx ;Iyy ;Izz]; % MOI about principal axis
+S_Eb = [(3/10)*me*(De/2)^2; (3/80)*me*(4*(De/2)^2+He^2); (3/80)*me*(4*(De/2)^2+He^2)]; % MOI of engine wrt body cg
+
+
