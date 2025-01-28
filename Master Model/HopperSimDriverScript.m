@@ -1,4 +1,6 @@
-clc; clear all; close all;
+clc;
+clear all;
+close all;
 
 %% Hopper Simulation Driver Script
 % Spring 2025
@@ -33,7 +35,7 @@ x_cg = ((mf*xf)+(me*xe))/(mf+me);
 
 % MOI matrix cal
 
-Ixx = 0.5*mf*(Df/2)^2+(3/10)*me*(De/2)^2;
+Ixx = 0.5*mf*(Df/2)^2+(3/10)*m e*(De/2)^2;
 Iyy = (1/12)*mf*(3*(Df/2)^2+Hf^2)+(3/80)*me*(4*(De/2)^2+He^2)+(mf*(xf-x_cg))^2+(me*(xe-x_cg))^2;
 Izz = Iyy;
 
