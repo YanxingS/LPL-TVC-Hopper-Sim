@@ -44,10 +44,16 @@ Izz = Iyy;
       % add y & z equations for each
       % add S_Eb change w.r.t. gimbal angle
 
-S_TD = [x_cg*mf; 0 ; 0]; % eqn 2.1.20, product of the total mass distribution and the position vector
-S_Eb = [(-3/4)*He*me; 0; 0]; % eqn 2.3.21  first moment of inertia of the engine about the gimbal point
+% S_TD = [x_cg*mf; 0 ; 0]; % eqn 2.1.20, product of the total mass distribution and the position vector
+% S_Eb = [(-3/4)*He*me; 0; 0]; % eqn 2.3.21  first moment of inertia of the engine about the gimbal point
 
-%% Evan
+S_TD = [0     0           0;
+        0     0     -x_cg*(mf+me);
+        0 x_cg*(mf+me)    0];
+S_Eb = [0     -(1/4)           0;
+        0     0       (3/4)*He*me;
+        0 (-3/4)*He*me    0];
+%% Evan -- Slosh not included
 
 % gimbal to TD cm
     syms rgx rgy rgz
@@ -62,7 +68,12 @@ I_Eb = [Iexx -Iexy -Iexz
       -Iexz -Ieyz  Iezz];
 
 % Tail Wags Dog Equation
-I_twd = I_Eb - cross(rg,S_Eb
+I_twd = I_Eb - cross(rg,S_Eb)
+
+% Rotational Equation
+    syms ax ay az
+a = [0 -az ay;az 0 -ax;-ay ax 0];
+cross(S_TD,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb = g + g_NL
 
 %% User defined I.C.
 
