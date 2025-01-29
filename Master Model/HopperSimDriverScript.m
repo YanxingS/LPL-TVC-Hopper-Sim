@@ -25,6 +25,7 @@ He = 20/12; % length of cone in feet
 mt = me+mf;
 
 % distance from cg to centroid
+       % also will change w.r.t. gimbal angle
 
 xf = (96/2)/12; % in feet
 xe = -(20-20/4)/12; % in feet
@@ -34,14 +35,40 @@ xe = -(20-20/4)/12; % in feet
 x_cg = ((mf*xf)+(me*xe))/(mf+me);
 
 % MOI matrix cal
-
-Ixx = 0.5*mf*(Df/2)^2+(3/10)*m e*(De/2)^2;
+      % eventually add TD change w.r.t. gimbal angle
+Ixx = 0.5*mf*(Df/2)^2+(3/10)*me*(De/2)^2;
 Iyy = (1/12)*mf*(3*(Df/2)^2+Hf^2)+(3/80)*me*(4*(De/2)^2+He^2)+(mf*(xf-x_cg))^2+(me*(xe-x_cg))^2;
 Izz = Iyy;
 
-S_TD = [x_cg*mf; 0 ; 0]; % eqn 2.1.20, product of the total mass distribution and the position vector
-S_Eb = [(-3/4)*He*me; 0; 0]; % eqn 2.3.21  first moment of inertia of the engine about the gimbal point
+      % add S_TD change w.r.t. gimbal angle
+      % add y & z equations for each
+      % add S_Eb change w.r.t. gimbal angle
 
+% S_TD = [x_cg*mf; 0 ; 0]; % eqn 2.1.20, product of the total mass distribution and the position vector
+% S_Eb = [(-3/4)*He*me; 0; 0]; % eqn 2.3.21  first moment of inertia of the engine about the gimbal point
+
+S_TD = [0     0           0;
+        0     0     -x_cg*(mf+me);
+        0 x_cg*(mf+me)    0];
+S_Eb = [0     0           0;
+        0     0       (3/4)*He*me;
+        0 (-3/4)*He*me    0];
+%% Evan
+
+% gimbal to TD cm
+    syms rgx rgy rgz
+rg = [ 0  -rgz  rgy
+      rgz   0  -rgx
+     -rgy  rgx   0 ];
+
+% Engine inertia matrix / gimbal rotation pt
+    syms Iexx Ieyy Iezz Iexy Iexz Ieyz
+I_Eb = [Iexx -Iexy -Iexz
+      -Iexy  Ieyy -Ieyz
+      -Iexz -Ieyz  Iezz];
+
+% Tail Wags Dog Equation
+I_twd = I_Eb - cross(rg,S_Eb)
 
 %% User defined I.C.
 
