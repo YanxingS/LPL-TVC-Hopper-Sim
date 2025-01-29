@@ -50,10 +50,10 @@ Izz = Iyy;
 S_TD = [0     0           0;
         0     0     -x_cg*(mf+me);
         0 x_cg*(mf+me)    0];
-S_Eb = [0     0           0;
-        0     0       (3/4)*He*me;
-        0 (-3/4)*He*me    0];
-%% Evan
+S_Eb = [0                   -(1/4)*(me^2+2*He^2) (1/4)*(me^2+2*He^2);
+       (1/4)*(me^2+2*He^2)          0           -(1/2)*me*(De/2)^2;
+       -(1/4)*(me^2+2*He^2) (1/2)*me*(De/2)^2           0]; % EN frame
+%% Evan -- Slosh not included
 
 % gimbal to TD cm
     syms rgx rgy rgz
@@ -68,7 +68,14 @@ I_Eb = [Iexx -Iexy -Iexz
       -Iexz -Ieyz  Iezz];
 
 % Tail Wags Dog Equation
-I_twd = I_Eb - cross(rg,S_Eb)
+I_twd = I_Eb - cross(rg,S_Eb);
+
+% Rotational Equation
+    syms ax ay az g g_NL
+a = [0 -az ay;az 0 -ax;-ay ax 0];
+omega_dot = [0 0 0];
+omega_dot_Eb = [0 0 0];
+cross(S_TD,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb == g + g_NL;
 
 %% User defined I.C.
 
