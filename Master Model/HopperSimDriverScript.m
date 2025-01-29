@@ -40,6 +40,8 @@ Ixx = 0.5*mf*(Df/2)^2+(3/10)*me*(De/2)^2;
 Iyy = (1/12)*mf*(3*(Df/2)^2+Hf^2)+(3/80)*me*(4*(De/2)^2+He^2)+(mf*(xf-x_cg))^2+(me*(xe-x_cg))^2;
 Izz = Iyy;
 
+I_TD = [Ixx 0 0; 0 Iyy 0; 0 0 Izz];
+
       % add S_TD change w.r.t. gimbal angle
       % add y & z equations for each
       % add S_Eb change w.r.t. gimbal angle
@@ -53,6 +55,7 @@ S_TD = [0     0           0;
 S_Eb = [0                   -(1/4)*(me^2+2*He^2) (1/4)*(me^2+2*He^2);
        (1/4)*(me^2+2*He^2)          0           -(1/2)*me*(De/2)^2;
        -(1/4)*(me^2+2*He^2) (1/2)*me*(De/2)^2           0]; % EN frame
+
 %% Evan -- Slosh not included
 
 % gimbal to TD cm
