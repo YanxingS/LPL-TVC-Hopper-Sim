@@ -83,7 +83,7 @@ cross(S_TD,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb == g + g_NL;
 %% Define quat function
 
 % we use matlab built in angle2quat for rotation representation
-% angle2quat outputs 
+% angle2quat outputs quaternion in 1x4 = (realpart,img,img,img)
 
 %% User defined I.C.
 
