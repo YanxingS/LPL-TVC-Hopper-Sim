@@ -80,6 +80,11 @@ omega_dot = [0 0 0];
 omega_dot_Eb = [0 0 0];
 cross(S_TD,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb == g + g_NL;
 
+%% Define quat function
+
+% we use matlab built in angle2quat for rotation representation
+% angle2quat outputs 
+
 %% User defined I.C.
 
 v_b_0 = [1 1 1]';
