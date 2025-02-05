@@ -46,13 +46,13 @@ I_TD = [Ixx 0 0; 0 Iyy 0; 0 0 Izz];
       % add y & z equations for each
       % add S_Eb change w.r.t. gimbal angle
 
-% S_TD = [x_cg*mf; 0 ; 0]; % eqn 2.1.20, product of the total mass distribution and the position vector
-% S_Eb = [(-3/4)*He*me; 0; 0]; % eqn 2.3.21  first moment of inertia of the engine about the gimbal point
+S_TD = [x_cg*mf; 0 ; 0]; % eqn 2.1.20, product of the total mass distribution and the position vector
+S_Eb = [(-3/4)*He*me; 0; 0]; % eqn 2.3.21  first moment of inertia of the engine about the gimbal point
 
-S_TD = [0     0           0;
+S_TD_matrix = [0     0           0;
         0     0     -x_cg*(mf+me);
         0 x_cg*(mf+me)    0];
-S_Eb = [0                   -(1/4)*(me^2+2*He^2) (1/4)*(me^2+2*He^2);
+S_Eb_matrix = [0                   -(1/4)*(me^2+2*He^2) (1/4)*(me^2+2*He^2);
        (1/4)*(me^2+2*He^2)          0           -(1/2)*me*(De/2)^2;
        -(1/4)*(me^2+2*He^2) (1/2)*me*(De/2)^2           0]; % EN frame
 
@@ -71,14 +71,14 @@ I_Eb = [Iexx -Iexy -Iexz
       -Iexz -Ieyz  Iezz];
 
 % Tail Wags Dog Equation
-I_twd = I_Eb - cross(rg,S_Eb);
+I_twd = I_Eb - cross(rg,S_Eb_matrix);
 
 % Rotational Equation
     syms ax ay az g g_NL
 a = [0 -az ay;az 0 -ax;-ay ax 0];
 omega_dot = [0 0 0];
 omega_dot_Eb = [0 0 0];
-cross(S_TD,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb == g + g_NL;
+cross(S_TD_matrix,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb == g + g_NL;
 
 %% Define quat function
 
@@ -87,4 +87,7 @@ cross(S_TD,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb == g + g_NL;
 
 %% User defined I.C.
 
-v_b_0 = [1 1 1]';
+
+THETA_IC = [0 0 0]; % hopper initial attitude in radians [yaw pitch roll]
+v_b_0 = [1 0 0]'; % hopper initial body translational velocity
+w_b_0 = [0 0 0]'; % hopper initial angular velocity

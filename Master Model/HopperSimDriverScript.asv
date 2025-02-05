@@ -40,6 +40,8 @@ Ixx = 0.5*mf*(Df/2)^2+(3/10)*me*(De/2)^2;
 Iyy = (1/12)*mf*(3*(Df/2)^2+Hf^2)+(3/80)*me*(4*(De/2)^2+He^2)+(mf*(xf-x_cg))^2+(me*(xe-x_cg))^2;
 Izz = Iyy;
 
+I_TD = [Ixx 0 0; 0 Iyy 0; 0 0 Izz];
+
       % add S_TD change w.r.t. gimbal angle
       % add y & z equations for each
       % add S_Eb change w.r.t. gimbal angle
@@ -50,9 +52,10 @@ Izz = Iyy;
 S_TD = [0     0           0;
         0     0     -x_cg*(mf+me);
         0 x_cg*(mf+me)    0];
-S_Eb = [0     -(1/4)           0;
-        0     0       (3/4)*He*me;
-        0 (-3/4)*He*me    0];
+S_Eb = [0                   -(1/4)*(me^2+2*He^2) (1/4)*(me^2+2*He^2);
+       (1/4)*(me^2+2*He^2)          0           -(1/2)*me*(De/2)^2;
+       -(1/4)*(me^2+2*He^2) (1/2)*me*(De/2)^2           0]; % EN frame
+
 %% Evan -- Slosh not included
 
 % gimbal to TD cm
@@ -68,13 +71,23 @@ I_Eb = [Iexx -Iexy -Iexz
       -Iexz -Ieyz  Iezz];
 
 % Tail Wags Dog Equation
-I_twd = I_Eb - cross(rg,S_Eb)
+I_twd = I_Eb - cross(rg,S_Eb);
 
 % Rotational Equation
-    syms ax ay az
+    syms ax ay az g g_NL
 a = [0 -az ay;az 0 -ax;-ay ax 0];
-cross(S_TD,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb = g + g_NL
+omega_dot = [0 0 0];
+omega_dot_Eb = [0 0 0];
+cross(S_TD,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb == g + g_NL;
+
+%% Define quat function
+
+% we use matlab built in angle2quat for rotation representation
+% angle2quat outputs quaternion in 1x4 = (realpart,img,img,img)
 
 %% User defined I.C.
 
+
+THETA_IC = [0 0 0]'; % hopper initial attitude in radians
 v_b_0 = [1 1 1]';
+w_b_0 = [0 0 0]'; % hopper initial angular velocity
