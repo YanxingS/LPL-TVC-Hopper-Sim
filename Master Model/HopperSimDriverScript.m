@@ -92,4 +92,4 @@ THETA_IC = [0 0 0]; % hopper initial attitude in radians [yaw pitch roll]
 v_b_0 = [1 0 0]'; % hopper initial body translational velocity
 w_b_0 = [0 0 0]'; % hopper initial angular velocity
 omega_b_0 = [1 1 1]';
-g = [0 0 -9.8066]'; % gravity-inertial
+g = [-9.8066 0 0]'; % gravity-inertial
