@@ -91,3 +91,5 @@ cross(S_TD_matrix,a) + I_TD.*omega_dot + I_twd.*omega_dot_Eb == g + g_NL;
 THETA_IC = [0 0 0]; % hopper initial attitude in radians [yaw pitch roll]
 v_b_0 = [1 0 0]'; % hopper initial body translational velocity
 w_b_0 = [0 0 0]'; % hopper initial angular velocity
+omega_b_0 = [1 1 1]';
+g = [0 0 -9.8066]'; % gravity-inertial
