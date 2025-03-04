@@ -1,14 +1,11 @@
-clc;
-clear all;
-close all;
-
+clc;clear all;close all;
 %% Hopper Simulation Driver Script
 % Spring 2025
 % University of Southern California, Viterbi School of Engineering
 % Liquid Propulsion Lab
-% TVC: Enson Su
+% TVC: Enson Su, Evan Broome, Ryan Eppolito, Josiah Hickman, Yifan Song
 
-%% Properties of Hopper
+%% Properties of Hopper at the start of simulation
 
 % all units in imperial, ISP
 
