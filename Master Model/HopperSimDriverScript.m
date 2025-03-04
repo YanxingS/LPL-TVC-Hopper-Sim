@@ -67,6 +67,7 @@ I_Eb = [Iexx -Iexy -Iexz
       -Iexy  Ieyy -Ieyz
       -Iexz -Ieyz  Iezz];
 
+
 % Tail Wags Dog Equation
 I_twd = I_Eb - cross(rg,S_Eb_matrix);
 
@@ -90,3 +91,4 @@ v_b_0 = [1 0 0]'; % hopper initial body translational velocity
 w_b_0 = [0 0 0]'; % hopper initial angular velocity
 omega_b_0 = [1 1 1]';
 g = [-9.8066 0 0]'; % gravity-inertial
+w_Eb = [0 0 0]; %engine initial angular velocity
