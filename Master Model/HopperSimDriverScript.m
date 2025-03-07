@@ -62,10 +62,7 @@ rg = [ 0  -rgz  rgy
      -rgy  rgx   0 ];
 
 % Engine inertia matrix / gimbal rotation pt
-    syms Iexx Ieyy Iezz Iexy Iexz Ieyz
-I_Eb = [Iexx -Iexy -Iexz
-      -Iexy  Ieyy -Ieyz
-      -Iexz -Ieyz  Iezz];
+I_Eb = [3/20*(me*((De/2)^2+4*He^2)) 0 0; 0 3/20*(me*((De/2)^2+4*He^2)) 0;  0 0 3/10*(me*(De/2)^2)];
 
 
 % Tail Wags Dog Equation
