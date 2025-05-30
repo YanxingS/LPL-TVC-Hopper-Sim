@@ -9,11 +9,11 @@ clc;clear all;close all;
 
 % all units in imperial, ISP
 
-mf = 600; % mass of fuselage in lb
+mf = 300; % mass of fuselage in lb
 Df = 12/12; % diameter of fuselage in feet
 Hf = 96/12; % length of fuselage in feet
 
-me = 110; % mass of engine
+me = 30; % mass of engine
 De = 5/12; % diameter of fueslage in feet
 He = 20/12; % length of cone in feet
 
